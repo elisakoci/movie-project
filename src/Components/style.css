@@ -141,10 +141,10 @@ nav ul li a:focus::before{
 }
 
 
-/*.release{
+.release{
     background-color: var(--primary-color);
-    width: 35px;
-    height: 35px;
+    width: 43px;
+    height: 43px;
     border-radius: 30%;
     display: flex;
     justify-content: center;
@@ -155,4 +155,4 @@ nav ul li a:focus::before{
     position: absolute;
     right: 5px;
     bottom: 5px;
-}*/
+}
