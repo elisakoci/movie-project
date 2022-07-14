@@ -1,6 +1,7 @@
-import react, { useEffect, useState } from "react";
-/*import { useEffect } from "react/cjs/react.development";*/
-import Card from "./Card";
+import React, { useEffect, useState } from "react";
+/*import { useEffect } from "react/js/react.development";*/
+import MovieList from "./MovieList";
+import MovieFilter from "./MovieFilter";
 
 let API_key = "k_20iymfye";
 let base_url = "https://imdb-api.com/API";
@@ -8,9 +9,11 @@ let url = base_url + "/ComingSoon/" + API_key;
 
 let array = ["Comming Soon", "Top 250 Movies", "Most Popular", "In Theaters"];
 
-const Main = () => {
+const Main = (props) => {
+  const [filteredYear, setFilteredYear] = useState("2022");
   /*useState Hook allow to track properties or data*/
   const [movieData, setMovieData] = useState([]);
+  const [filteredMovies, setFilteredMovies] = useState([]);
   const [url_set, setUrl] = useState(url);
   const [search, setSearch] = useState(" ");
 
@@ -20,20 +23,33 @@ const Main = () => {
       .then((data) => {
         //console.log(data.items);/*items from console*/
         setMovieData(data.items);
+        filetrMovies(filteredYear);
       });
   }, [url_set]);
 
+  const filterChangeHandler = (selectedYear) => {
+    setFilteredYear(selectedYear);
+    filetrMovies(selectedYear);
+  };
+
+  const filetrMovies = (year) => {
+    const filtered_Movies = movieData.filter((movie) => {
+      return movie.year === year;
+    });
+    setFilteredMovies(filtered_Movies);
+  };
+
   const getData = (movieType) => {
-    if (movieType == "Comming Soon") {
+    if (movieType === "Comming Soon") {
       url = base_url + "/ComingSoon/" + API_key;
     }
-    if (movieType == "Top 250 Movies") {
+    if (movieType === "Top 250 Movies") {
       url = base_url + "/Top250Movies/" + API_key;
     }
-    if (movieType == "Most Popular") {
+    if (movieType === "Most Popular") {
       url = base_url + "/MostPopularMovies/" + API_key;
     }
-    if (movieType == "In Theaters") {
+    if (movieType === "In Theaters") {
       url = base_url + "/InTheaters/" + API_key;
     }
 
@@ -41,7 +57,7 @@ const Main = () => {
   };
 
   const searchMovie = (evt) => {
-    if (evt.key == "Enter") {
+    if (evt.key === "Enter") {
       url = base_url + "/SearchMovie/k_20iymfye/inception 2010";
       setUrl(url);
       setSearch(" ");
@@ -90,18 +106,10 @@ const Main = () => {
           </div>
         </form>
       </div>
+      <MovieFilter selected={filteredYear} onChange={filterChangeHandler} />
 
       <div className="container">
-        {
-          /*if doesn't find one -not fouund, otherwise map ang get the movie props from child Card*/
-          movieData.length === 0 ? (
-            <p className="notfound">No Movie List For The Moment</p>
-          ) : (
-            movieData.map((res, pos) => {
-              return <Card movie={res} key={pos} />;
-            })
-          )
-        }
+        <MovieList items={filteredMovies} />
       </div>
     </>
   );
