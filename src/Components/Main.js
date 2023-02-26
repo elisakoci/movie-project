@@ -60,7 +60,8 @@ const Main = (props) => {
     if (evt.key === "Enter") {
       url = base_url + "/SearchMovie/k_20iymfye/inception 2010";
       setUrl(url);
-      setSearch(" ");
+      setSearch(url);
+      console.log(url);
     }
   };
 
