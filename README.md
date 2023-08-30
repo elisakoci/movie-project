@@ -1,5 +1,10 @@
 # Getting Started with Create React App
 
+If the page doesn't display the list of films, is because the IMDb API is not free anymore
+
+![movie_web](https://github.com/elisakoci/movie-project/assets/49443032/32eb00f4-5abc-440e-8b8d-88a43eba4051)
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
